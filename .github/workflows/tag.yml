@@ -1,0 +1,19 @@
+name: Add Workflows (with Filter)
+
+on:
+  create:
+    tags:
+      - '*'   # Trigger on the creation of any tag
+
+jobs:
+  copy-workflows:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Check repository name
+        if: ${{ startsWith(github.event.repository.name, 'project-') }}  
+        run: |
+          echo "Copying workflow file..."  
+          cp -r .github/workflow-templates/test.yml ${{ github.event.repository.full_name }}/.github/workflows
