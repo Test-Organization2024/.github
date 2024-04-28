@@ -4,6 +4,7 @@ on:
   create:
     tags:
       - '*'   # Trigger on the creation of any tag
+  workflow_dispatch: # Add this line for manual triggering
 
 jobs:
   copy-workflows:
@@ -12,8 +13,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Check repository name
-        if: ${{ startsWith(github.event.repository.name, 'project-') }}  
+      - name: Copy workflows
         run: |
-          echo "Copying workflow file..."  
-          cp -r .github/workflow-templates/test.yml ${{ github.event.repository.full_name }}/.github/workflows
+          cp -r .github/workflow-templates/.github/workflows ${{ github.event.repository.full_name }}/.github/workflows
