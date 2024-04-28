@@ -1,0 +1,16 @@
+name: New Repository Workflow
+
+on:
+  repository:
+    types: [created]
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Print Repository Name
+        run: echo "A new repository called ${{ github.event.repository.name }} was created."
